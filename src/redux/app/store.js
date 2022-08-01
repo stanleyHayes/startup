@@ -7,6 +7,7 @@ const phase = localStorage.getItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY)
     JSON.parse(localStorage.getItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY))
     : phaseInitialState
 
+
 const store = configureStore({
     reducer: {
         phase: phaseReducer

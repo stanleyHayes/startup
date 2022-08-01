@@ -13,6 +13,10 @@ function App() {
     const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
+        dispatch(PHASE_ACTION_CREATORS.init());
+    }, []);
+
+    useEffect(() => {
         if (completed) {
             dispatch(PHASE_ACTION_CREATORS.getQuote());
         }
@@ -36,7 +40,7 @@ function App() {
 
                 <Typography variant="h4" sx={{color: 'text.primary'}}>Startup Phases</Typography>
 
-                <Divider variant="fullWidth"  sx={{my: 4}}/>
+                <Divider variant="fullWidth" sx={{my: 4}}/>
 
                 {completed && (
                     <Card elevation={0} sx={{mb: 5}}>

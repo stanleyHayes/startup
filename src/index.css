@@ -14,7 +14,7 @@ body {
 
 @font-face {
   font-family: "EuclidCircularA";
-  src: local("EuclidCircularA.ttf"), url("/src/assets/fonts/euclid-a/Euclid Circular A Regular.ttf") format("truetype");
+  src: url("/src/assets/fonts/euclid-a/Euclid Circular A Regular.ttf") format("truetype");
   font-display: swap;
   font-weight: 400;
   font-style: normal;

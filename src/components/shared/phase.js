@@ -1,6 +1,7 @@
 import {Avatar, Box, Stack, Typography} from "@mui/material";
 import React from "react";
 import Task from "./task";
+import {Done} from "@mui/icons-material";
 
 const Phase = ({phase}) => {
     return (
@@ -14,6 +15,9 @@ const Phase = ({phase}) => {
                 <Typography variant="h6" sx={{color: 'text.primary'}}>
                     {phase.name}
                 </Typography>
+                {phase.completed && (
+                    <Done color="primary" sx={{fontSize: 32}} />
+                )}
             </Stack>
 
             {phase.tasks.map((task, index) => {

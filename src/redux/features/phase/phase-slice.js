@@ -7,6 +7,7 @@ export const phaseInitialState = {
         {
             name: 'Foundation',
             phase: 1,
+            completed: false,
             tasks: [
                 {
                     _id: 1,
@@ -33,6 +34,7 @@ export const phaseInitialState = {
         {
             name: 'Discovery',
             phase: 2,
+            completed: false,
             tasks: [
                 {
                     _id: 1,
@@ -49,6 +51,7 @@ export const phaseInitialState = {
         {
             name: 'Delivery',
             phase: 3,
+            completed: false,
             tasks: [
                 {
                     _id: 1,
@@ -63,7 +66,6 @@ export const phaseInitialState = {
             ]
         }
     ],
-    currentPhase: 1,
     completed: false,
     loading: false,
     error: null,
@@ -84,8 +86,18 @@ const phaseSlice = createSlice({
     name: 'phase',
     initialState: phaseInitialState,
     reducers: {
+        init: (state) => {
+            state.phases = state.phases.map(phase => {
+                const completed = phase.tasks.every(task => task.completed);
+                if(completed){
+                    phase.completed = true;
+                }
+                return phase;
+            });
+        },
         updateTask: (state, action) => {
             if (!state.completed) {
+
                 if (action.payload.phase.phase > 1) {
                     // get the current phase
                     const currentPhaseID = action.payload.phase.phase;
@@ -105,6 +117,7 @@ const phaseSlice = createSlice({
                             }
                         })
                     });
+
                     if (allowUpdate) {
                         state.phases = state.phases.map(phase => {
                             if (phase.phase === action.payload.phase.phase) {
@@ -124,7 +137,6 @@ const phaseSlice = createSlice({
                             }
                             return phase;
                         });
-
                         // handle the case where a previous task is unchecked while a subsequent task is checked
                         // this can happen when you previously complete a task and later unchecks it
                         localStorage.setItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY, JSON.stringify(state));
@@ -148,7 +160,8 @@ const phaseSlice = createSlice({
                         localStorage.setItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY, JSON.stringify(state));
                     }
 
-                } else {
+                }
+                else {
                     state.phases = state.phases.map(phase => {
                         if (phase.phase === action.payload.phase.phase) {
                             phase.tasks.map(task => {
@@ -164,11 +177,25 @@ const phaseSlice = createSlice({
                                 task.completed = false;
                                 return task;
                             })
+                            state.phases = state.phases.map(phase => {
+                                if(phase.tasks.every(task => task.completed)){
+                                    phase.completed = true;
+                                }
+                                return phase;
+                            });
                         }
                         return phase;
                     });
                     localStorage.setItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY, JSON.stringify(state));
                 }
+
+                state.phases = state.phases.map(phase => {
+                    if(phase.tasks.every(task => task.completed)){
+                        phase.completed = true;
+                    }
+                    return phase;
+                });
+                localStorage.setItem(STARTUP_CONSTANTS.STARTUP_PHASE_KEY, JSON.stringify(state));
             }
             // when phases are completed
             else {
