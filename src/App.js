@@ -33,6 +33,11 @@ function App() {
     return (
         <Box sx={{minHeight: '100vh', backgroundColor: 'background.default', py: 4}}>
             <Container maxWidth="sm" sx={{height: '100%'}}>
+
+                <Typography variant="h4" sx={{color: 'text.primary'}}>Startup Phases</Typography>
+
+                <Divider variant="fullWidth"  sx={{my: 4}}/>
+
                 {completed && (
                     <Card elevation={0} sx={{mb: 5}}>
                         {loading && (<LinearProgress variant="query" color="secondary"/>)}

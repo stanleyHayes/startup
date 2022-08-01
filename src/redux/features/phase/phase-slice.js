@@ -149,7 +149,6 @@ const phaseSlice = createSlice({
                     }
 
                 } else {
-                    console.log('here')
                     state.phases = state.phases.map(phase => {
                         if (phase.phase === action.payload.phase.phase) {
                             phase.tasks.map(task => {
